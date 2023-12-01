@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "444952729049",
+    "project_id": "finalweatherapp-e79e6",
+    "storage_bucket": "finalweatherapp-e79e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444952729049:android:73bd4c01238f3f9adb75c8",
+        "android_client_info": {
+          "package_name": "com.example.finalweatherapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmrhr4hUOWPeI_MTQ_J9dPfRPNj-_xm2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
