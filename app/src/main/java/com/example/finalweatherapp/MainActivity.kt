@@ -32,6 +32,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -113,8 +114,14 @@ class MainActivity : ComponentActivity() {
                             }
                         }
 
+                        val name = remember{mutableStateOf("")}
+                        val userid = amouht.currentUser?.uid?:""
+                        val user = (application as AppApplication).repository.findUser(uid = userid).observeAsState()
+
                         LazyColumn(
-                            modifier = Modifier.fillMaxWidth().padding(top = 0.dp, bottom = 250.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 0.dp, bottom = 250.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.SpaceAround
                         ) {
@@ -124,14 +131,12 @@ class MainActivity : ComponentActivity() {
                             )
 
 
-                            val allUsers = (application as AppApplication).repository.allUsers()
-                            val name = mutableStateOf("")
-                            val userid = amouht.currentUser?.uid?:""
-                            val user = (application as AppApplication).repository.findUser(userid).value
+
 
 
                             item {
-                                Column(modifier = Modifier.fillMaxWidth()
+                                Column(modifier = Modifier
+                                    .fillMaxWidth()
                                     .wrapContentHeight()
                                     .padding(24.dp)
                                     , horizontalAlignment = Alignment.CenterHorizontally)
@@ -149,7 +154,9 @@ class MainActivity : ComponentActivity() {
 
                                     Box(modifier = Modifier.wrapContentHeight()) {
                                         Text(
-                                            text = ("Welcome," + user?.first()?.uid?:""),
+                                            text = ("Welcome, " + if(!(user.value?.isEmpty()?:true)) {user.value?.first()?.name} else {
+                                                "new user"
+                                            }),
                                             fontSize = 24.sp,
                                             fontWeight = FontWeight(800),
                                             color = colorResource(id = R.color.black),
@@ -165,9 +172,10 @@ class MainActivity : ComponentActivity() {
 
 
                                         item {
-                                            if((user?.first()?.uid?.length?: 0 != 0)) {
+                                            if((user.value?.isEmpty()?:true)) {
                                                 Column(
-                                                    modifier = Modifier.fillMaxWidth()
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
                                                         .wrapContentHeight()
                                                         .padding(16.dp),
                                                     horizontalAlignment = Alignment.CenterHorizontally
@@ -175,7 +183,8 @@ class MainActivity : ComponentActivity() {
                                                     OutlinedTextField(
                                                         value = name.value,
                                                         onValueChange = { name.value = it },
-                                                        modifier = Modifier.fillMaxWidth()
+                                                        modifier = Modifier
+                                                            .fillMaxWidth()
                                                             .padding(start = 48.dp, end = 48.dp),
                                                         label = { Text(text = "What's your name?") },
                                                         shape = RoundedCornerShape(50.dp)
@@ -199,11 +208,11 @@ class MainActivity : ComponentActivity() {
                                                             loading = true
                                                             startLocationUpdates()
 
-                                                            if(!(user?.first()?.uid?.length?: 0 != 0)) {
+                                                            if((user.value?.isEmpty()?:true)) {
                                                                 (application as AppApplication).repository.addUser(
                                                                     User(
                                                                         uid = userid,
-                                                                        name  = "test" //name.value ?: "test"
+                                                                        name  = name.value ?: ""
                                                                     )
                                                                 )
                                                             }

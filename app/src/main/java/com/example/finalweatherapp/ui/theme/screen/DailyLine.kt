@@ -107,13 +107,13 @@ fun DailyLine(
                     ) {
 
                     Text(
-                        text = "Max " + ("%.2f".format(minTemp.toFloat() - 273.15)) + "°C",
+                        text = "Min " + ("%.2f".format(minTemp.toFloat() - 273.15)) + "°C",
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium,
                     )
 
                     Text(
-                        text = "Min " + ("%.2f".format(maxTemp.toFloat() - 273.15)) + "°C",
+                        text = "Max " + ("%.2f".format(maxTemp.toFloat() - 273.15)) + "°C",
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium,
                     )
