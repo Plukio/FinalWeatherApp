@@ -49,8 +49,8 @@ import com.example.finalweatherapp.model.utils.DateUtil.toFormattedDay
 import com.example.finalweatherapp.model.utils.EXTRA_Lat
 import com.example.finalweatherapp.model.utils.EXTRA_Long
 import com.example.finalweatherapp.ui.theme.FinalWeatherAppTheme
-import com.example.finalweatherapp.ui.theme.screen.DailyLine
-import com.example.finalweatherapp.ui.theme.screen.ForecastComponent
+import com.example.finalweatherapp.screen.DailyLine
+import com.example.finalweatherapp.screen.ForecastComponent
 import java.util.Locale
 
 

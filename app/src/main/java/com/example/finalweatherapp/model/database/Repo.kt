@@ -7,7 +7,7 @@ import com.example.finalweatherapp.model.data.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class Repo(private val userdao: UserDao, private val activityDao: ActivityDao) {
+open class Repo(private val userdao: UserDao, private val activityDao: ActivityDao) {
 
     fun allUsers(): LiveData<List<User>> = userdao.allUsers()
     fun findUser(uid: String): LiveData<List<User>> = userdao.findUser(uid)

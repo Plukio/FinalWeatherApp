@@ -13,8 +13,8 @@ import java.util.concurrent.Executors
     version = 1,
     exportSchema = false
 )
-abstract class UserDataActivityDatabase : RoomDatabase() {
 
+abstract class UserDataActivityDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun activityDao(): ActivityDao
 

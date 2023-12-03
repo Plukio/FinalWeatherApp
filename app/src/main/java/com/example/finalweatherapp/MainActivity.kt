@@ -62,12 +62,7 @@ class MainActivity : ComponentActivity() {
     private var locationCallback: LocationCallback? = null
     var fusedLocationClient: FusedLocationProviderClient? = null
     private var locationRequired = false
-
     lateinit var amouht: FirebaseAuth
-
-    //val database = UserDataActivityDatabase.getDatabase(application)
-    //val userDao = database.userDao()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -131,9 +126,6 @@ class MainActivity : ComponentActivity() {
                             )
 
 
-
-
-
                             item {
                                 Column(modifier = Modifier
                                     .fillMaxWidth()
@@ -169,72 +161,64 @@ class MainActivity : ComponentActivity() {
 
 
                             if(!loading) {
+                                item {
+                                    if((user.value?.isEmpty()?:true)) {
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .wrapContentHeight()
+                                                .padding(16.dp),
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            OutlinedTextField(
+                                                value = name.value,
+                                                onValueChange = { name.value = it },
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(start = 48.dp, end = 48.dp),
+                                                label = { Text(text = "What's your name?") },
+                                                shape = RoundedCornerShape(50.dp)
+                                            )
+                                        }
+                                    }
+
+                                    Spacer(Modifier.height(12.dp))
+
+                                    if (!loading) {
+                                        Button(
+                                            onClick = {
+                                                if (permissions.all {
+                                                        ContextCompat.checkSelfPermission(
+                                                            context,
+                                                            it
+                                                        ) == PackageManager.PERMISSION_GRANTED
+                                                    }) {
+                                                    loading = true
+                                                    startLocationUpdates()
+
+                                                    if((user.value?.isEmpty()?:true)) {
+                                                        (application as AppApplication).repository.addUser(
+                                                            User(
+                                                                uid = userid,
+                                                                name  = name.value ?: ""
+                                                            )
+                                                        )
+                                                    }
 
 
-                                        item {
-                                            if((user.value?.isEmpty()?:true)) {
-                                                Column(
-                                                    modifier = Modifier
-                                                        .fillMaxWidth()
-                                                        .wrapContentHeight()
-                                                        .padding(16.dp),
-                                                    horizontalAlignment = Alignment.CenterHorizontally
-                                                ) {
-                                                    OutlinedTextField(
-                                                        value = name.value,
-                                                        onValueChange = { name.value = it },
-                                                        modifier = Modifier
-                                                            .fillMaxWidth()
-                                                            .padding(start = 48.dp, end = 48.dp),
-                                                        label = { Text(text = "What's your name?") },
-                                                        shape = RoundedCornerShape(50.dp)
+                                                } else {
+                                                    launcherMultiplePermissions.launch(
+                                                        permissions
                                                     )
                                                 }
-                                            }
-
-
-
-                                            Spacer(Modifier.height(12.dp))
-
-                                            if (!loading) {
-                                                Button(
-                                                    onClick = {
-                                                        if (permissions.all {
-                                                                ContextCompat.checkSelfPermission(
-                                                                    context,
-                                                                    it
-                                                                ) == PackageManager.PERMISSION_GRANTED
-                                                            }) {
-                                                            loading = true
-                                                            startLocationUpdates()
-
-                                                            if((user.value?.isEmpty()?:true)) {
-                                                                (application as AppApplication).repository.addUser(
-                                                                    User(
-                                                                        uid = userid,
-                                                                        name  = name.value ?: ""
-                                                                    )
-                                                                )
-                                                            }
-
-
-                                                        } else {
-                                                            launcherMultiplePermissions.launch(
-                                                                permissions
-                                                            )
-                                                        }
-                                                    },
-                                                    colors = ButtonDefaults.buttonColors(Color.Black)
-                                                ) {
-                                                    Text(text = "Continue")
-
-                                                }
-
+                                            },
+                                            colors = ButtonDefaults.buttonColors(Color.Black)
+                                        ) {
+                                            Text(text = "Continue")
+                                        }
                                     }
                                 }
                             }
-
-
 
                             if (loading) {
                                 item {
@@ -258,13 +242,10 @@ class MainActivity : ComponentActivity() {
                                     }
                                 }
                             }
-
                         }
-
                     }
                 }
             }
-
     }
 
     @SuppressLint("MissingPermission")
@@ -312,13 +293,6 @@ class MainActivity : ComponentActivity() {
         }
         handler.postDelayed(runnable, 1000)
     }
-
-
-
-
-
-
-
 }
 
 

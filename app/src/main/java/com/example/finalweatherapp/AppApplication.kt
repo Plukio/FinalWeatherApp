@@ -9,6 +9,7 @@ class AppApplication: Application() {
     val database by lazy {
         UserDataActivityDatabase.getDatabase(this)
     }
+
     val repository by lazy {
         Repo(database.userDao(), database.activityDao())
     }

@@ -1,4 +1,4 @@
-package com.example.finalweatherapp.ui.theme.screen
+package com.example.finalweatherapp.screen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
